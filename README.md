@@ -18,7 +18,11 @@
 
 ## Installation
 
+* From the app root, run `npm install` to install all the dependencies
+
 ## Development
+
+* From the app root, run `npm start` to start the bot
 
 ## License
 
