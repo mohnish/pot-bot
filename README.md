@@ -11,6 +11,11 @@
 * /info
 * /start
 
+## Tech Stack
+
+* NodeJS 16.8.0
+* MongoDB TODO
+
 ## Installation
 
 ## Development
