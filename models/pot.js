@@ -1,18 +1,8 @@
 const mongoose = require("../config/db");
-
-const membersOutcome = mongoose.Schema({
-    home: {
-        type: Array,
-        required: false
-    },
-    away: {
-        type: Array,
-        required: false
-    }
-})
+var Schema = mongoose.Schema;
 
 const potSchema = mongoose.Schema({
-    id: {
+    potId: {
         type: String,
         required: true
     },
@@ -20,12 +10,12 @@ const potSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    outcome:{
-        type: String,
+    outcomes:{
+        type: Schema.Types.Mixed,
         required: true
     },
     buyIn: {
-        type: number,
+        type: String,
         required: true
     },
     startAt: {
@@ -36,9 +26,16 @@ const potSchema = mongoose.Schema({
         type: Date,
         required: true
     },
-    members: membersOutcome,
     status: {
         type: String,
+        required: true
+    },
+    creatorId: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
         required: true
     }
 });
