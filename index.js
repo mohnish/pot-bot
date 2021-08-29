@@ -27,10 +27,6 @@ const db = {
 };
 
 bot.command('sup', (ctx) => {
-  // Explicit usage
-  // ctx.telegram.sendMessage(ctx.message.chat.id, `Hello ${ctx.state.role}`)
-
-  // Using context shortcut
   ctx.reply(`<3 @${ctx.update.message.from.username}`);
 });
 
@@ -67,6 +63,7 @@ bot.command('join', (ctx) => {
 
   let outcomes = Object.keys(db[id].outcomes);
 
+  // TODO (MT): Switch to use Markup.inlineKeyboard()
   ctx.telegram.sendMessage(ctx.update.message.from.id, 'What outcome are you rooting for?', {
     reply_markup: {
       inline_keyboard: [[{ text: outcomes[0], callback_data: `${id},${outcomes[0]}` }, { text: outcomes[1], callback_data: `${id},${outcomes[1]}` }]]
@@ -93,11 +90,6 @@ bot.command('info', (ctx) => {
 });
 
 bot.on('callback_query', (ctx) => {
-  // // Explicit usage
-  // ctx.telegram.answerCbQuery(ctx.callbackQuery.id)
-  // // Using context shortcut
-  // ctx.answerCbQuery()
-
   ctx.telegram.deleteMessage(ctx.update.callback_query.message.chat.id, ctx.update.callback_query.message.message_id);
 
   const [id, outcome] = ctx.update.callback_query.data.split(',');
@@ -179,18 +171,13 @@ const createNewPotWizard = new Scenes.WizardScene('create-new-pot',
 
 const stage = new Scenes.Stage([createNewPotWizard]);
 
-// stage.command('cancel', (ctx) => {
-//     ctx.reply("Operation canceled");
-//     return ctx.scene.leave();
-// });
-
 bot.use(session());
 bot.use(stage.middleware());
 
 bot.command('new', async (ctx) => {
   // DB: Create new Pot with the params
   // Respond with custom keyboard
-  // ctx.scene.enter('create-new-pot');
+
   if (ctx.update.message.chat.type == 'group') {
     ctx.reply("Let's switch to private chat...");
 
