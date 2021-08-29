@@ -5,16 +5,16 @@
 ## Features
 
 * /active
-* /scheduled
+* /upcoming
 * /past
 * /join
 * /info
-* /start
+* /new
 
 ## Tech Stack
 
 * NodeJS 16.8.0
-* MongoDB TODO
+* MongoDB
 
 ## Setup
 
@@ -25,7 +25,7 @@ From the app root:
 
 ## Development
 
-* From the app root, run `npm start` to start the bot
+* From the app root, run `npm run dev` to start the bot
 
 ## License
 

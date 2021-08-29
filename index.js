@@ -55,9 +55,15 @@ bot.command('join', (ctx) => {
   // DB: Update outcome array of Pot with the ID
   const [_, id] = ctx.update.message.text.split(' ');
 
+  if (ctx.update.message.chat.type == 'group') {
+    ctx.reply("Let's switch to private chat...");
+
+    ctx.telegram.sendMessage(ctx.update.message.from.id, "Usage: /join POT_ID\n\nUse /upcoming to see a list of pots you can join or create one yourself by using /new");
+    return;
+  }
+
   if (!id) {
-    let msg = 'Usage: /join POT_ID\n\nUse /upcoming to see a list of pots you can join or create one yourself by using /new';
-    ctx.reply(msg);
+    ctx.reply('Usage: /join POT_ID\n\nUse /upcoming to see a list of pots you can join or create one yourself by using /new');
     return;
   }
 
@@ -75,18 +81,18 @@ bot.command('info', (ctx) => {
   const [_, id] = ctx.update.message.text.split(' ');
 
   if (!id) {
-    ctx.reply('Usage: /info POT_ID');
+    ctx.reply('Usage: /info POT_ID\n\nUse /upcoming to see a list of pots you can join or create one yourself by using /new');
     return;
   }
 
-  let str = '';
+  let str = `Pot: *${db[id].event}*\n\n`;
 
   Object.keys(db[id].outcomes).forEach((outcome) => {
     let members = db[id].outcomes[outcome];
-    str += `${outcome} wins: ${members}`
+    str += `*${outcome}*: ${members.join(', ')}\n`
   });
 
-  ctx.reply(str);
+  ctx.replyWithMarkdownV2(str);
 });
 
 bot.on('callback_query', (ctx) => {
@@ -101,7 +107,7 @@ bot.on('callback_query', (ctx) => {
 
 const createNewPotWizard = new Scenes.WizardScene('create-new-pot',
   async (ctx) => {
-    await ctx.replyWithMarkdownV2(`*Enter the name of your pot*: _eg: FC Barcelona vs Real Madrid_`);
+    await ctx.replyWithMarkdownV2(`*Enter the name of your pot*: _eg: Barca vs RMA_`);
 
     ctx.wizard.state.data = {
       userId: ctx.update.message.from.id
@@ -112,35 +118,35 @@ const createNewPotWizard = new Scenes.WizardScene('create-new-pot',
   async (ctx) => {
     ctx.wizard.state.data.event = ctx.message.text;
 
-    await ctx.replyWithMarkdownV2(`Enter the 1st outcome for *${ctx.wizard.state.data.event}*: _eg: FC Barcelona wins_`);
+    await ctx.replyWithMarkdownV2(`Enter the 1st outcome for *${ctx.wizard.state.data.event}*: _eg: Barca wins_`);
 
     await ctx.wizard.next();
   },
   async (ctx) => {
     ctx.wizard.state.data.first = ctx.message.text;
 
-    await ctx.replyWithMarkdownV2(`Enter the 2nd outcome for *${ctx.wizard.state.data.event}*: _eg: Real Madrid wins_`);
+    await ctx.replyWithMarkdownV2(`Enter the 2nd outcome for *${ctx.wizard.state.data.event}*: _eg: RMA wins_`);
 
     await ctx.wizard.next();
   },
   async (ctx) => {
     ctx.wizard.state.data.second = ctx.message.text;
 
-    await ctx.replyWithMarkdownV2(`How much is the Buy in? _eg: $5_`);
+    await ctx.replyWithMarkdownV2(`*How much is the Buy in?* _eg: $5_`);
 
     await ctx.wizard.next();
   },
   async (ctx) => {
     ctx.wizard.state.data.buyIn = ctx.message.text;
 
-    await ctx.replyWithMarkdownV2(`When do you want to start the pot?`);
+    await ctx.replyWithMarkdownV2(`*When does your pot activate?*`);
 
     await ctx.wizard.next();
   },
   async (ctx) => {
     ctx.wizard.state.data.startAt = ctx.message.text;
 
-    await ctx.replyWithMarkdownV2(`When do you want to stop the pot?`);
+    await ctx.replyWithMarkdownV2(`*When does your pot deactivate?*`);
 
     await ctx.wizard.next();
   },
@@ -163,7 +169,7 @@ const createNewPotWizard = new Scenes.WizardScene('create-new-pot',
       createdAt: new Date()
     }
 
-    await ctx.reply('Done!');
+    await ctx.replyWithMarkdownV2(`Successfully created the pot: *${db[counter].event}*`);
 
     await ctx.scene.leave();
   }
