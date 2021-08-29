@@ -3,7 +3,7 @@ export default async function(ctx) {
   const [_, id] = ctx.update.message.text.split(' ');
 
   if (ctx.update.message.chat.type == 'group') {
-    ctx.reply("Let's switch to private chat...");
+    ctx.reply("Let's continue in private...");
 
     ctx.telegram.sendMessage(ctx.update.message.from.id, "Usage: /join POT_ID\n\nUse /upcoming to see a list of pots you can join or create one yourself by using /new");
     return;
