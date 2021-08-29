@@ -1,13 +1,13 @@
 import { Telegraf, Scenes, session, Markup } from 'telegraf';
 import { config } from 'dotenv';
 import {
-  NewHandler,
-  JoinHandler,
-  InfoHandler,
   ActiveHandler,
+  EndHandler,
+  InfoHandler,
+  JoinHandler,
+  NewHandler,
   PastHandler,
   UpcomingHandler,
-  EndHandler,
 } from './commandHandlers/commandHandlers.js';
 import createPotScene from './stage/createPotScene.js';
 
