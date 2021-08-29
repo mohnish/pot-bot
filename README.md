@@ -16,9 +16,16 @@
 * NodeJS 16.8.0
 * MongoDB TODO
 
-## Installation
+## Setup
+
+From the app root:
+
+* Run `npm install` to install all the dependencies
+* Rename `.env.sample` to `.env` and update the values to your needs
 
 ## Development
+
+* From the app root, run `npm start` to start the bot
 
 ## License
 
