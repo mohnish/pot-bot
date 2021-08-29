@@ -5,16 +5,16 @@
 ## Features
 
 * /active
-* /scheduled
+* /upcoming
 * /past
 * /join
 * /info
-* /start
+* /new
 
 ## Tech Stack
 
 * NodeJS 16.8.0
-* MongoDB TODO
+* MongoDB
 
 ## Setup
 
@@ -22,16 +22,21 @@ From the app root:
 
 * Run `npm install` to install all the dependencies
 * Rename `.env.sample` to `.env` and update the values to your needs
+* You'll need to create your own Telegram bot using [@BotFather](https://core.telegram.org/bots#6-botfather)
+  * Use the bot token and assign it to `TELEGRAM_BOT_TOKEN` in `.env` file
 
 ## Development
 
-* From the app root, run `npm start` to start the bot
+* From the app root, run `npm run dev` to start the bot
+
+*NOTE* Make sure you `/start` the bot before you try interacting with the bot.
+Telegram doesn't allow bots to message a user without permission.
 
 ## License
 
 MIT License
 
-Copyright (c) 2021 Mohnish Thallavajhula
+Copyright (c) 2021 Mohnish Thallavajhula hi@iam.mt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
