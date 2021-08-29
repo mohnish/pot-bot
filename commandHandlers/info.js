@@ -6,12 +6,12 @@ export default async function(ctx) {
     return;
   }
 
-  let str = `Pot: *${db[id].event}*\n\n`;
+  // let str = `Pot: *${db[id].event}*\n\n`;
 
-  Object.keys(db[id].outcomes).forEach((outcome) => {
-    let members = db[id].outcomes[outcome];
-    str += `*${outcome}*: ${members.join(', ')}\n`
-  });
+  // Object.keys(db[id].outcomes).forEach((outcome) => {
+  //   let members = db[id].outcomes[outcome];
+  //   str += `*${outcome}*: ${members.join(', ')}\n`
+  // });
 
   ctx.replyWithMarkdownV2(str);
 }

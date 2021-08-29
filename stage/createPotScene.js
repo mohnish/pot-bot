@@ -48,23 +48,7 @@ const createPotScene = new Scenes.WizardScene('create-new-pot',
   async (ctx) => {
     ctx.wizard.state.data.stopAt = ctx.message.text;
 
-    console.log('Pot data', ctx.wizard.state.data);
-
-    db[++counter] = {
-      event: ctx.wizard.state.data.event,
-      outcomes: {
-        [ctx.wizard.state.data.first]: [],
-        [ctx.wizard.state.data.second]: [],
-      },
-      buyIn: ctx.wizard.state.data.buyIn,
-      startAt: ctx.wizard.state.data.startAt,
-      stopAt: ctx.wizard.state.data.stopAt,
-      status: 'scheduled',
-      creatorId: `@${ctx.message.from.username}`,
-      createdAt: new Date()
-    }
-
-    await ctx.replyWithMarkdownV2(`Successfully created the pot: *${db[counter].event}*`);
+    await ctx.replyWithMarkdownV2(`Successfully created the pot (TODO- put in event name here)`);
 
     await ctx.scene.leave();
   }

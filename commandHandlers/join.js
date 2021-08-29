@@ -14,12 +14,12 @@ export default async function(ctx) {
     return;
   }
 
-  let outcomes = Object.keys(db[id].outcomes);
+  // let outcomes = Object.keys(db[id].outcomes);
 
   // TODO (MT): Switch to use Markup.inlineKeyboard()
-  ctx.telegram.sendMessage(ctx.update.message.from.id, 'What outcome are you rooting for?', {
-    reply_markup: {
-      inline_keyboard: [[{ text: outcomes[0], callback_data: `${id},${outcomes[0]}` }, { text: outcomes[1], callback_data: `${id},${outcomes[1]}` }]]
-    }
-  });
+  // ctx.telegram.sendMessage(ctx.update.message.from.id, 'What outcome are you rooting for?', {
+  //   reply_markup: {
+  //     inline_keyboard: [[{ text: outcomes[0], callback_data: `${id},${outcomes[0]}` }, { text: outcomes[1], callback_data: `${id},${outcomes[1]}` }]]
+  //   }
+  // });
 }
