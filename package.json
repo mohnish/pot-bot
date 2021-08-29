@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node index.js"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
