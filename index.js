@@ -21,6 +21,7 @@ import {
   ViewPotHandler,
 } from './callbackQueryHandlers/callbackQueryHandlers.js';
 
+import CALLBACK_QUERY_ENUMS from './helpers/callbackQueryEnums.js';
 import createPotScene from './stage/createPotScene.js';
 import { getBy, update, destroy } from './repositories/pot.js';
 
@@ -48,25 +49,25 @@ bot.on('callback_query', async (ctx) => {
   const [action, target, ...data] = ctx.update.callback_query.data.split(':');
 
   switch (action) {
-  case 'selectEndingPot':
+  case CALLBACK_QUERY_ENUMS.SELECT_ENDING_POT:
     SelectEndingPotHandler(ctx, target, data);
     break;
-  case 'destroyPot':
+  case CALLBACK_QUERY_ENUMS.DESTROY_POT:
     DestroyPotHandler(ctx, target, data);
     break;
-  case 'endPot':
+  case CALLBACK_QUERY_ENUMS.END_POT:
     EndPotHandler(ctx, target, data);
     break;
-  case 'viewPot':
+  case CALLBACK_QUERY_ENUMS.VIEW_POT:
     ViewPotHandler(ctx, target, data);
     break;
-  case 'lockPot':
+  case CALLBACK_QUERY_ENUMS.LOCK_POT:
     LockPotHandler(ctx, target, data);
     break;
-  case 'selectPot':
+  case CALLBACK_QUERY_ENUMS.SELECT_POT:
     SelectPotHandler(ctx, target, data);
     break;
-  case 'joinPot':
+  case CALLBACK_QUERY_ENUMS.JOIN_POT:
     JoinPotHandler(ctx, target, data);
     break;
   default:
@@ -84,6 +85,5 @@ bot.command('new', NewHandler);
 bot.launch();
 
 // Enable graceful stop
-// TODO (MT): Also handle db connection close if pool is active
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));

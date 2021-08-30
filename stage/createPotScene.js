@@ -6,7 +6,8 @@ const createPotScene = new Scenes.WizardScene('create-new-pot',
     await ctx.replyWithMarkdownV2(`*Enter the name of your pot*: _eg: Barca vs RMA_`);
 
     ctx.wizard.state.data = {
-      userId: ctx.update.message.from.id
+      userId: ctx.update.message.from.id,
+      username: ctx.update.message.from.username,
     };
 
     await ctx.wizard.next();
@@ -19,14 +20,14 @@ const createPotScene = new Scenes.WizardScene('create-new-pot',
     await ctx.wizard.next();
   },
   async (ctx) => {
-    ctx.wizard.state.data.first = ctx.message.text;
+    ctx.wizard.state.data.firstOutcome = ctx.message.text;
 
     await ctx.replyWithMarkdownV2(`Enter the *2nd outcome* for *${ctx.wizard.state.data.event}*: _eg: RMA wins_`);
 
     await ctx.wizard.next();
   },
   async (ctx) => {
-    ctx.wizard.state.data.second = ctx.message.text;
+    ctx.wizard.state.data.secondOutcome = ctx.message.text;
 
     await ctx.replyWithMarkdownV2(`*How much is the Buy in?* _could be anything_`);
 
@@ -35,8 +36,8 @@ const createPotScene = new Scenes.WizardScene('create-new-pot',
   async (ctx) => {
     ctx.wizard.state.data.buyIn = ctx.message.text;
     ctx.wizard.state.data.outcomes = {
-      [ctx.wizard.state.data.first]: [],
-      [ctx.wizard.state.data.second]: [],
+      [ctx.wizard.state.data.firstOutcome]: [],
+      [ctx.wizard.state.data.secondOutcome]: [],
     };
     ctx.wizard.state.data.status = 'active';
     ctx.wizard.state.data.locked = false;
@@ -47,7 +48,7 @@ const createPotScene = new Scenes.WizardScene('create-new-pot',
       await savePot(ctx.wizard.state.data);
       await ctx.replyWithMarkdownV2(`Successfully created the pot: *${ctx.wizard.state.data.event}*`);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       await ctx.replyWithMarkdownV2('Failed to create the pot, please try again');
     }
 
