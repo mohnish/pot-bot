@@ -1,4 +1,5 @@
 import { Telegraf, Scenes, session, Markup } from 'telegraf';
+import { Agenda } from 'agenda';
 import { config } from 'dotenv';
 import {
   ActiveHandler,
@@ -11,6 +12,20 @@ import {
 } from './commandHandlers/commandHandlers.js';
 import createPotScene from './stage/createPotScene.js';
 
+const agenda = new Agenda({ db: { address: process.env.DB_CONN_URL_DEV } });
+
+agenda.define('test sup command', async (job) => {
+    const { msg, ctx } = job.attrs.data;
+
+    try {
+      await ctx.reply(msg);
+    } catch (e) {
+      console.log('errrrrrr', e);
+    }
+
+  }
+);
+
 // Bootstrap ENV vars
 config();
 
@@ -20,6 +35,13 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 // This is to just test out the basic command API behavior
 bot.command('sup', async (ctx) => {
+  await agenda.start();
+
+  agenda.schedule('in 3 seconds', 'test sup command', {
+    msg: `task scheduled at ${new Date}`,
+    ctx
+  });
+
   ctx.reply(`<3 @${ctx.update.message.from.username}`);
 });
 

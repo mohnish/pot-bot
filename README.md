@@ -14,7 +14,7 @@
 ## Tech Stack
 
 * NodeJS 16.8.0
-* MongoDB
+* MongoDB 5.0
 
 ## Setup
 
@@ -24,8 +24,20 @@ From the app root:
 * Rename `.env.sample` to `.env` and update the values to your needs
 * You'll need to create your own Telegram bot using [@BotFather](https://core.telegram.org/bots#6-botfather)
   * Use the bot token and assign it to `TELEGRAM_BOT_TOKEN` in `.env` file
+* Install MongoDB. On macOS, run
+  * `brew tap mongodb/brew`
+  * `brew install mongodb-community@5.0`
 
 ## Development
+
+### MongoDB
+
+MongoDB is used as the primary data store and also to persist scheduled tasks
+
+* Start server `brew services start mongodb-community@5.0`
+  * Ensure connectivity by running `mongosh myFirstDatabase`
+
+### App
 
 * From the app root, run `npm run dev` to start the bot
 

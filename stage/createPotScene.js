@@ -1,4 +1,10 @@
 import { Scenes } from 'telegraf';
+import { Agenda } from 'agenda';
+import { config } from 'dotenv';
+// Bootstrap ENV vars
+config();
+
+const agenda = new Agenda({ db: { address: process.env.DB_CONN_URL_DEV } });
 
 const createPotScene = new Scenes.WizardScene('create-new-pot',
   async (ctx) => {
