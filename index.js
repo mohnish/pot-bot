@@ -6,8 +6,7 @@ import {
   InfoHandler,
   JoinHandler,
   NewHandler,
-  PastHandler,
-  UpcomingHandler,
+  CompletedHandler,
 } from './commandHandlers/commandHandlers.js';
 import createPotScene from './stage/createPotScene.js';
 
@@ -24,8 +23,7 @@ bot.command('sup', async (ctx) => {
 });
 
 bot.command('active', ActiveHandler);
-bot.command('past', PastHandler);
-bot.command('upcoming', UpcomingHandler);
+bot.command('completed', CompletedHandler);
 bot.command('end', EndHandler);
 bot.command('join', JoinHandler);
 bot.command('info', InfoHandler);

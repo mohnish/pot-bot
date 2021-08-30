@@ -14,19 +14,15 @@ export default mongoose.model("Pot", mongoose.Schema({
     type: String,
     required: true
   },
-  startAt: {
-    type: Date,
-    required: true
-  },
-  stopAt: {
-    type: Date,
-    required: true
-  },
   status: {
     type: String,
     required: true
   },
-  creator: {
+  locked: {
+    type: Boolean,
+    required: true
+  },
+  creatorId: {
     type: String,
     required: true
   },

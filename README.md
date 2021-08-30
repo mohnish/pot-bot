@@ -4,12 +4,13 @@
 
 ## Features
 
-* /active
-* /upcoming
-* /past
-* /join
-* /info
-* /new
+* /active Fetch all active pots (includes locked)
+* /completed Fetch all completed pots
+* /join Join an active unlocked pot
+* /info Query an active pot
+* /new Start a new pot
+* /lock Lock a pot you created, preventing others from joining
+* /end End a pot you created
 
 ## Tech Stack
 
