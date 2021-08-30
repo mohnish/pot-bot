@@ -1,4 +1,4 @@
-var User = require("../models/user");
+import User from '../models/user.js';
 
 async function save(memberId, name){
     var instance = new User({
@@ -28,7 +28,7 @@ async function update(user){
     return await User.updateOne({"memberId": user.memberId}, user);
 }
 
-module.exports= {
+export {
     save,
     getBy,
     getAllBy,

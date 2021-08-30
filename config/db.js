@@ -1,3 +1,3 @@
-const mongooseConnection = require('mongoose');
+import mongooseConnection from 'mongoose';
 mongooseConnection.connect(process.env.MONGO_SRV)
-module.exports = mongooseConnection;
+export default mongooseConnection;

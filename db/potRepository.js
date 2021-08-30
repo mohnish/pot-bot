@@ -1,4 +1,4 @@
-const Pot = require("../models/pot");
+import Pot from '../models/pot.js'
 
 async function save(pot){
     var instance = new Pot(pot);
@@ -25,7 +25,7 @@ async function update(pot){
     return await Pot.updateOne({potId: pot.potId}, pot)
 }
 
-module.exports={
+export {
     save,
     getAllBy,
     getBy,

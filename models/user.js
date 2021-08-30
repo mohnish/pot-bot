@@ -1,6 +1,6 @@
-const mongoose = require("../config/db");
+import mongoose from '../config/db.js';
 
-const userSchema = mongoose.Schema({
+export default mongoose.model("User", mongoose.Schema({
     name: {
         type: String,
         required: true
@@ -9,6 +9,4 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true
     }
-})
-
-module.exports = mongoose.model("User", userSchema, "users");
+}), "users");
