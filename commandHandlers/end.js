@@ -1,5 +1,6 @@
 import { Markup } from 'telegraf';
 import { getAllBy } from '../repositories/pot.js';
+import CALLBACK_QUERY_ENUMS from '../helpers/callbackQueryEnums.js';
 
 export default async function(ctx) {
   if (ctx.update.message.chat.type == 'group') {
@@ -19,7 +20,7 @@ export default async function(ctx) {
   const replyButtons = [];
 
   endablePots.forEach((endablePot) => {
-    replyButtons.push(Markup.button.callback(endablePot.event, `selectEndingPot:${endablePot.id}:${ctx.update.message.from.username}`));
+    replyButtons.push(Markup.button.callback(endablePot.event, `${CALLBACK_QUERY_ENUMS.SELECT_ENDING_POT}:${endablePot.id}:${ctx.update.message.from.username}`));
   });
 
   await ctx.telegram.sendMessage(ctx.update.message.chat.id, 'Which pot do you wish to end?', Markup.inlineKeyboard(replyButtons));

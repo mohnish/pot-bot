@@ -1,5 +1,6 @@
 import { Markup } from 'telegraf';
 import { getAllBy } from '../repositories/pot.js';
+import CALLBACK_QUERY_ENUMS from '../helpers/callbackQueryEnums.js';
 
 export default async function(ctx) {
   if (ctx.update.message.chat.type == 'group') {
@@ -18,7 +19,7 @@ export default async function(ctx) {
   const replyButtons = [];
 
   joinablePots.forEach((joinablePot) => {
-    replyButtons.push(Markup.button.callback(joinablePot.event, `selectPot:${joinablePot.id}:${ctx.update.message.from.username}`));
+    replyButtons.push(Markup.button.callback(joinablePot.event, `${CALLBACK_QUERY_ENUMS.SELECT_POT}:${joinablePot.id}:${ctx.update.message.from.username}`));
   });
 
   await ctx.telegram.sendMessage(ctx.update.message.from.id, 'Which pot do you wish to join?', Markup.inlineKeyboard(replyButtons));

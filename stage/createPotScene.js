@@ -47,7 +47,7 @@ const createPotScene = new Scenes.WizardScene('create-new-pot',
       await savePot(ctx.wizard.state.data);
       await ctx.replyWithMarkdownV2(`Successfully created the pot: *${ctx.wizard.state.data.event}*`);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       await ctx.replyWithMarkdownV2('Failed to create the pot, please try again');
     }
 
