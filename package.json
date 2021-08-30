@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js",
     "start": "node --experimental-modules --es-module-specifier-resolution=node index.js"
