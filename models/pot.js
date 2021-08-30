@@ -10,6 +10,14 @@ export default mongoose.model("Pot", mongoose.Schema({
     type: Schema.Types.Mixed,
     required: true
   },
+  firstOutcome: {
+    type: String,
+    required: true
+  },
+  secondOutcome: {
+    type: String,
+    required: true
+  },
   buyIn: {
     type: String,
     required: true

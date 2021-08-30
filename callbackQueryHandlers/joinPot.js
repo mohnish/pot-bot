@@ -1,8 +1,11 @@
 import { getBy, update } from '../repositories/pot.js';
 
 export default async function(ctx, target, data) {
-  const [username, selectedOutcome] = data;
+  const [username, selectedOutcomeInNumeric] = data;
   const pot = await getBy({ _id: target });
+
+  const selectedOutcome = selectedOutcomeInNumeric == '1' ? pot.firstOutcome : pot.secondOutcome;
+
   const outcomes = pot.outcomes;
 
   Object.keys(outcomes).forEach((outcome) => {

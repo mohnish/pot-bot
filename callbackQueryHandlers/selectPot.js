@@ -6,9 +6,8 @@ export default async function(ctx, target, data) {
   const pot = await getBy({ _id: target });
   const replyButtons = [];
 
-  Object.keys(pot.outcomes).forEach((outcome) => {
-    replyButtons.push(Markup.button.callback(outcome, `${CALLBACK_QUERY_ENUMS.JOIN_POT}:${pot.id}:${ctx.update.callback_query.message.chat.username}:${outcome}`));
-  });
+  replyButtons.push(Markup.button.callback(pot.firstOutcome, `${CALLBACK_QUERY_ENUMS.JOIN_POT}:${pot.id}:${ctx.update.callback_query.message.chat.username}:1`));
+  replyButtons.push(Markup.button.callback(pot.secondOutcome, `${CALLBACK_QUERY_ENUMS.JOIN_POT}:${pot.id}:${ctx.update.callback_query.message.chat.username}:2`));
 
   return await ctx.telegram.sendMessage(ctx.update.callback_query.message.chat.id, 'Choose an outcome', Markup.inlineKeyboard(replyButtons));
 }
