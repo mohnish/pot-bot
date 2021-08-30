@@ -2,8 +2,10 @@ import { Markup } from 'telegraf';
 import { getAllBy } from '../repositories/pot.js';
 
 export default async function(ctx) {
-  if (ctx.update.message.chat.type == 'private') {
-    ctx.reply("This command works only in a group...");
+  if (ctx.update.message.chat.type == 'group') {
+    await ctx.reply("This command works only in a private...");
+
+    await ctx.telegram.sendMessage(ctx.update.message.from.id, "Run the /end command here");
 
     return;
   }

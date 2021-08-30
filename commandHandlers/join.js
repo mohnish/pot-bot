@@ -10,6 +10,11 @@ export default async function(ctx) {
   }
 
   const joinablePots = await getAllBy({ status: 'active', locked: false });
+
+  if (joinablePots.length == 0) {
+    return ctx.reply('No pots available');
+  }
+
   const replyButtons = [];
 
   joinablePots.forEach((joinablePot) => {
