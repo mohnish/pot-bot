@@ -8,16 +8,29 @@ async function save(memberId, name){
     await instance.save();
 }
 
-async function findUserById(memberId){
-    return await User.findOne({memberId: memberId});
+async function getBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
+    return await User.findOne(filter);
 }
 
-async function getAll(){
+async function getAllBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
     return await User.find({});
+}
+
+async function update(user){
+    return await User.updateOne({"memberId": user.memberId}, user);
 }
 
 module.exports= {
     save,
-    findUserById,
-    getAll
+    getBy,
+    getAllBy,
+    update
 }

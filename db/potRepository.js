@@ -5,16 +5,29 @@ async function save(pot){
     await instance.save();
 }
 
-async function getAllByStatus(status){
-    return  await Pot.find({status: status}).exec();
+async function getAllBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
+    return await Pot.find(filter).exec();
 }
 
-async function getPotById(id){
-    return await Pot.findOne({potId: id});
+async function getBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
+    return await Pot.findOne(filter);
+}
+
+async function update(pot){
+    return await Pot.updateOne({potId: pot.potId}, pot)
 }
 
 module.exports={
     save,
-    getAllByStatus,
-    getPotById
+    getAllBy,
+    getBy,
+    update
 }
