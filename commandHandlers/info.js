@@ -5,5 +5,12 @@ export default async function(ctx) {
 
   console.log(activePots);
 
-  ctx.replyWithMarkdownV2('hi');
+  let msg = '*Active Pots*\n\n';
+  let counter = 0;
+
+  activePots.forEach((activePot) => {
+    msg += `*${++counter}* ${activePot.event}`;
+  });
+
+  ctx.replyWithMarkdownV2(msg);
 }
