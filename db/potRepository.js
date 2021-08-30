@@ -1,20 +1,33 @@
-const Pot = require("../models/pot");
+import Pot from '../models/pot.js'
 
 async function save(pot){
     var instance = new Pot(pot);
     await instance.save();
 }
 
-async function getAllByStatus(status){
-    return  await Pot.find({status: status}).exec();
+async function getAllBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
+    return await Pot.find(filter).exec();
 }
 
-async function getPotById(id){
-    return await Pot.findOne({potId: id});
+async function getBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
+    return await Pot.findOne(filter);
 }
 
-module.exports={
+async function update(pot){
+    return await Pot.updateOne({potId: pot.potId}, pot)
+}
+
+export {
     save,
-    getAllByStatus,
-    getPotById
+    getAllBy,
+    getBy,
+    update
 }

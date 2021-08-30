@@ -1,4 +1,4 @@
-var User = require("../models/user");
+import User from '../models/user.js';
 
 async function save(memberId, name){
     var instance = new User({
@@ -8,16 +8,29 @@ async function save(memberId, name){
     await instance.save();
 }
 
-async function findUserById(memberId){
-    return await User.findOne({memberId: memberId});
+async function getBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
+    return await User.findOne(filter);
 }
 
-async function getAll(){
+async function getAllBy(attr, value){
+    var filter={};
+    if(attr){
+        filter[attr]=value;
+    }
     return await User.find({});
 }
 
-module.exports= {
+async function update(user){
+    return await User.updateOne({"memberId": user.memberId}, user);
+}
+
+export {
     save,
-    findUserById,
-    getAll
+    getBy,
+    getAllBy,
+    update
 }

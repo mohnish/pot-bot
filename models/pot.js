@@ -1,7 +1,7 @@
-const mongoose = require("../config/db");
+import mongoose from '../config/db.js';
 var Schema = mongoose.Schema;
 
-const potSchema = mongoose.Schema({
+export default mongoose.model("Pot", mongoose.Schema({
     potId: {
         type: String,
         required: true
@@ -38,7 +38,5 @@ const potSchema = mongoose.Schema({
         type: Date,
         required: true
     }
-});
-
-module.exports = mongoose.model("Pot", potSchema);
+}));
 
