@@ -9,6 +9,7 @@ import {
   CompletedHandler,
 } from './commandHandlers/commandHandlers.js';
 import createPotScene from './stage/createPotScene.js';
+import { getBy } from './repositories/pot.js';
 
 // Bootstrap ENV vars
 config();
@@ -28,14 +29,50 @@ bot.command('end', EndHandler);
 bot.command('join', JoinHandler);
 bot.command('info', InfoHandler);
 
-bot.on('callback_query', (ctx) => {
-  // `ctx.deleteMessage()` should suffice at this point
-  ctx.telegram.deleteMessage(ctx.update.callback_query.message.chat.id, ctx.update.callback_query.message.message_id);
+bot.on('callback_query', async (ctx) => {
+  // ctx.telegram.deleteMessage(ctx.update.callback_query.message.chat.id, ctx.update.callback_query.message.message_id);
+  ctx.deleteMessage();
 
-  // const [id, outcome] = ctx.update.callback_query.data.split(',');
+  const [action, target, ...data] = ctx.update.callback_query.data.split(':');
 
-  // ctx.replyWithMarkdownV2(`You're now rooting for *${outcome}* in *${db[id].event}* 🎉`);
-  ctx.replyWithMarkdownV2('Inside callback_query callback');
+  switch (action) {
+  case 'selectPot':
+    const selectedPot = await getBy({ _id: target });
+    const replyButtons = [];
+
+    Object.keys(selectedPot.outcomes).forEach((outcome) => {
+      replyButtons.push(Markup.button.callback(outcome, `joinPot:${selectedPot.id}:${ctx.update.callback_query.message.chat.username}:${outcome}`));
+    });
+
+    await ctx.telegram.sendMessage(ctx.update.callback_query.message.chat.id, 'Choose an outcome', Markup.inlineKeyboard(replyButtons));
+
+    break;
+  case 'joinPot':
+    const [username, selectedOutcome] = data;
+    const joiningPot = await getBy({ _id: target });
+    const outcomes = joiningPot.outcomes;
+
+    Object.keys(outcomes).forEach((outcome) => {
+      outcomes[outcome] = new Set(outcomes[outcome]);
+      outcomes[outcome].delete(username);
+    });
+
+    outcomes[selectedOutcome].add(username);
+
+    joiningPot.outcomes = outcomes;
+
+    await joiningPot.save();
+
+    let msg = '';
+    Object.keys(outcomes).forEach((outcome) => {
+      msg += `${outcome}: ${Array.from(outcomes[outcome]).join(', ')}\n`;
+    });
+
+    await ctx.replyWithMarkdownV2(`Pot outcome:\n${msg}`);
+    break;
+  default:
+    console.log('Something went wrong!');
+  }
 });
 
 const stage = new Scenes.Stage([createPotScene]);
