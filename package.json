@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js",
     "prod": "node --experimental-modules --es-module-specifier-resolution=node index.js",
+    "web": "pm2 start npm -- run prod",
     "start": "pm2 start npm -- run prod",
     "status": "pm2 status",
     "stop": "pm2 stop all"
@@ -17,5 +18,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
-  }
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "license": "MIT"
 }
