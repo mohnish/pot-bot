@@ -85,6 +85,5 @@ bot.command('new', NewHandler);
 bot.launch();
 
 // Enable graceful stop
-// TODO (MT): Also handle db connection close if pool is active
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
