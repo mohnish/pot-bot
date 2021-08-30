@@ -45,6 +45,13 @@ MongoDB is used as the primary data store and also to persist scheduled tasks
 *NOTE* Make sure you `/start` the bot before you try interacting with the bot.
 Telegram doesn't allow bots to message a user without permission.
 
+## Production Deploy
+
+* Install dependencies `npm install`
+* Start the script by running `npm start`
+* Stop: `npm stop`
+* Status: `npm run status`
+
 ## License
 
 MIT License
