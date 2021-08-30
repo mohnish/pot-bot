@@ -18,6 +18,10 @@ export default mongoose.model("Pot", mongoose.Schema({
     type: String,
     required: true
   },
+  finalOutcome: {
+    type: String,
+    required: false
+  },
   locked: {
     type: Boolean,
     required: true

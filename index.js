@@ -5,11 +5,12 @@ import {
   EndHandler,
   InfoHandler,
   JoinHandler,
+  LockHandler,
   NewHandler,
   CompletedHandler,
 } from './commandHandlers/commandHandlers.js';
 import createPotScene from './stage/createPotScene.js';
-import { getBy } from './repositories/pot.js';
+import { getBy, update, destroy } from './repositories/pot.js';
 
 // Bootstrap ENV vars
 config();
@@ -27,6 +28,7 @@ bot.command('active', ActiveHandler);
 bot.command('completed', CompletedHandler);
 bot.command('end', EndHandler);
 bot.command('join', JoinHandler);
+bot.command('lock', LockHandler);
 bot.command('info', InfoHandler);
 
 bot.on('callback_query', async (ctx) => {
@@ -36,6 +38,54 @@ bot.on('callback_query', async (ctx) => {
   const [action, target, ...data] = ctx.update.callback_query.data.split(':');
 
   switch (action) {
+  case 'selectEndingPot':
+    const selectedEndingPot = await getBy({ _id: target });
+    const replyButtonsForEndingPot = [];
+
+    Object.keys(selectedEndingPot.outcomes).forEach((outcome) => {
+      replyButtonsForEndingPot.push(Markup.button.callback(outcome, `endPot:${selectedEndingPot.id}:${ctx.update.callback_query.message.chat.username}:${outcome}`));
+    });
+
+    replyButtonsForEndingPot.push(Markup.button.callback('DELETE', `destroyPot:${selectedEndingPot.id}:${ctx.update.callback_query.message.chat.username}`));
+
+    await ctx.telegram.sendMessage(ctx.update.callback_query.message.chat.id, 'Select final outcome', Markup.inlineKeyboard(replyButtonsForEndingPot));
+
+    break;
+  case 'destroyPot':
+    const potToDelete = await getBy({ _id: target });
+
+    await destroy(target);
+
+    await ctx.replyWithMarkdownV2(`*${potToDelete.event}* has been deleted`);
+    break;
+  case 'endPot':
+    const potToEnd = await getBy({ _id: target });
+    const [_, finalOutcome] = data;
+    potToEnd.finalOutcome = finalOutcome;
+    potToEnd.status = 'completed';
+    potToEnd.locked = true;
+
+    await update(potToEnd);
+    await ctx.replyWithMarkdownV2(`*${potToEnd.event}* has beem marked as complete`);
+    break;
+  case 'viewPot':
+    const viewPot = await getBy({ _id: target });
+
+    let infoMessage = '';
+    Object.keys(viewPot.outcomes).forEach((outcome) => {
+      infoMessage += `${outcome}: ${viewPot.outcomes[outcome].join(', ')}\n`;
+    });
+
+    await ctx.replyWithMarkdownV2(`*${viewPot.event}*\n\n${infoMessage}`);
+    break;
+  case 'lockPot':
+    const potToBeLocked = await getBy({ _id: target });
+    potToBeLocked.locked = true;
+
+    await update(potToBeLocked);
+
+    await ctx.replyWithMarkdownV2(`*${potToBeLocked.event}* is now locked`);
+    break;
   case 'selectPot':
     const selectedPot = await getBy({ _id: target });
     const replyButtons = [];
@@ -59,16 +109,20 @@ bot.on('callback_query', async (ctx) => {
 
     outcomes[selectedOutcome].add(username);
 
+    Object.keys(outcomes).forEach((outcome) => {
+      outcomes[outcome] = Array.from(outcomes[outcome]);
+    });
+
     joiningPot.outcomes = outcomes;
 
-    await joiningPot.save();
+    await update(joiningPot);
 
     let msg = '';
     Object.keys(outcomes).forEach((outcome) => {
       msg += `${outcome}: ${Array.from(outcomes[outcome]).join(', ')}\n`;
     });
 
-    await ctx.replyWithMarkdownV2(`Pot outcome:\n${msg}`);
+    await ctx.replyWithMarkdownV2(`Joined pot successfully:\n${msg}`);
     break;
   default:
     console.log('Something went wrong!');

@@ -14,12 +14,17 @@ async function getBy(condition) {
 }
 
 async function update(pot) {
-  return await Pot.updateOne({ potId: pot.potId }, pot);
+  return await Pot.updateOne({ _id: pot._id }, pot);
+}
+
+async function destroy(potId) {
+  return await Pot.deleteOne({ _id: potId });
 }
 
 export {
   save,
   getAllBy,
   getBy,
-  update
+  update,
+  destroy,
 }
