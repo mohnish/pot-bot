@@ -17,8 +17,6 @@ config();
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
-// TODO (MT): Include db middleware here
-
 // This is to just test out the basic command API behavior
 bot.command('sup', async (ctx) => {
   ctx.reply(`Hello, @${ctx.update.message.from.username}!`);
