@@ -1,7 +1,6 @@
 import { getAllBy } from '../repositories/pot.js';
 
 export default async function(ctx) {
-  // FIXME (MT): Also add date filter to limit to past 2 days
   const pastPots = await getAllBy({ status: 'completed' });
 
   let msg = '*Completed Pots*\n\n';
