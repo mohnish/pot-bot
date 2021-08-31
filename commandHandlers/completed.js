@@ -5,13 +5,17 @@ export default async function(ctx) {
 
   let msg = '*COMPLETED POTS*\n\n';
 
+  if (completedPots.length == 0) {
+    ctx.reply('No pots available');
+  }
+
   completedPots.forEach((completedPot) => {
-    let buyIn = Number(completedPot.buyIn.replace(/[^0-9.-]+/g, ''));;
+    let buyIn = Number(completedPot.buyIn.replace(/[^0-9.-]+/g, ''));
     let totalWinners = completedPot.outcomes[completedPot.finalOutcome].length;
     let losingOutcome = completedPot.finalOutcome == completedPot.firstOutcome ? completedPot.secondOutcome : completedPot.firstOutcome;
     let totalLosers = completedPot.outcomes[losingOutcome].length;
     let totalWinningsPerHead = (buyIn * totalLosers) / totalWinners;
-    let victoryEmoji = totalWinningsPerHead == 0 ? '🙈' : '🎉';
+    let victoryEmoji = totalWinningsPerHead == 0 ? '🙈' : '🎉🎉';
     let winningMsg = '';
 
     if (totalWinners == 0) {
@@ -26,5 +30,5 @@ export default async function(ctx) {
     msg += winningMsg;
   });
 
-  ctx.replyWithMarkdownV2(msg);
+  ctx.replyWithMarkdown(msg);
 }
