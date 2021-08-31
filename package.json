@@ -1,6 +1,26 @@
 {
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js",
+    "prod": "node --experimental-modules --es-module-specifier-resolution=node index.js",
+    "web": "pm2 start npm -- run prod",
+    "start": "pm2 start npm -- run prod",
+    "status": "pm2 status",
+    "stop": "pm2 stop all"
+  },
   "dependencies": {
-    "express": "^4.17.1",
-    "mongoose": "^6.0.2"
-  }
+    "agenda": "^4.2.1",
+    "dotenv": "^10.0.0",
+    "moment-timezone": "^0.5.33",
+    "mongoose": "^5.13.8",
+    "pm2": "^5.1.1",
+    "telegraf": "^4.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "license": "MIT"
 }

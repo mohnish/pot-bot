@@ -1,0 +1,11 @@
+const CALLBACK_QUERY_ENUMS = {
+  DESTROY_POT: '1',
+  END_POT: '2',
+  JOIN_POT: '3',
+  LOCK_POT: '4',
+  SELECT_ENDING_POT: '5',
+  SELECT_POT: '6',
+  VIEW_POT: '7',
+};
+
+export default CALLBACK_QUERY_ENUMS;
