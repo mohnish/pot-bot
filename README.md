@@ -1,6 +1,8 @@
 # Pot Bot
 
-> A bot to manage your pots ;-)
+> Just a pot managing bot
+
+*DISCLAIMER*: It has nothing to do with Weed
 
 ## Features
 
