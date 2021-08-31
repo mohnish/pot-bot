@@ -52,6 +52,10 @@ Telegram doesn't allow bots to message a user without permission.
 * Stop: `npm stop`
 * Status: `npm run status`
 
+If you wish to deploy it to Heroku, you can do so by clicking below (Make sure you have the ENV vars configured):
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 ## License
 
 MIT License
