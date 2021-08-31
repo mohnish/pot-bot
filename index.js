@@ -1,5 +1,6 @@
 import { Telegraf, Scenes, session, Markup } from 'telegraf';
 import { config } from 'dotenv';
+import express from 'express';
 
 import {
   ActiveHandler,
@@ -28,6 +29,8 @@ import { getBy, update, destroy } from './repositories/pot.js';
 config();
 
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
+
+const app = express();
 
 // This is to just test out the basic command API behavior
 bot.command('sup', async (ctx) => {
@@ -85,3 +88,11 @@ bot.launch();
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
+
+app.get('/', (req, res) => {
+  res.send('Welcome to Pot Bot!');
+});
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
+});
