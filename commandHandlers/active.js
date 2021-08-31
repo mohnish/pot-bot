@@ -3,11 +3,17 @@ import { getAllBy } from '../repositories/pot.js';
 export default async function(ctx) {
   const activePots = await getAllBy({ status: 'active' });
 
-  let msg = '*Active Pots*\n\n';
-  let counter = 0;
+  if (activePots.length == 0) {
+    return await ctx.reply('No pots available');
+  }
+
+  let msg = '*ACTIVE POTS*\n\n';
 
   activePots.forEach((activePot) => {
-    msg += `*${++counter}* ${activePot.event}`;
+    let emoji = activePot.locked ? "⛔️" : "➡️";
+    msg += `${emoji} *${activePot.event}* 💰*${activePot.buyIn}*💰\n`;
+    msg += `${activePot.firstOutcome}: _*${activePot.outcomes[activePot.firstOutcome].join(', ')}*_\n`;
+    msg += `${activePot.secondOutcome}: _*${activePot.outcomes[activePot.secondOutcome].join(', ')}*_\n\n`;
   });
 
   ctx.replyWithMarkdownV2(msg);
