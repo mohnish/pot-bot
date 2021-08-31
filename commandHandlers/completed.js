@@ -6,7 +6,7 @@ export default async function(ctx) {
   let msg = '*COMPLETED POTS*\n\n';
 
   if (completedPots.length == 0) {
-    ctx.reply('No pots available');
+    return await ctx.reply('No pots available');
   }
 
   completedPots.forEach((completedPot) => {
