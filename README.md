@@ -2,7 +2,7 @@
 
 > Just a pot managing bot
 
-*DISCLAIMER*: It has nothing to do with Weed
+*DISCLAIMER: It has nothing to do with Weed*
 
 ## Features
 
