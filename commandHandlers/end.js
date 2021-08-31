@@ -3,7 +3,7 @@ import { getAllBy } from '../repositories/pot.js';
 import CALLBACK_QUERY_ENUMS from '../helpers/callbackQueryEnums.js';
 
 export default async function(ctx) {
-  if (ctx.update.message.chat.type == 'group') {
+  if (ctx.update.message.chat.type != 'private') {
     await ctx.reply("This command works only in a private...");
 
     await ctx.telegram.sendMessage(ctx.update.message.from.id, "Run the /end command here");
