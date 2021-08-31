@@ -5,7 +5,6 @@ import {
   ActiveHandler,
   CompletedHandler,
   EndHandler,
-  InfoHandler,
   JoinHandler,
   LockHandler,
   NewHandler,
@@ -40,7 +39,6 @@ bot.command('completed', CompletedHandler);
 bot.command('end', EndHandler);
 bot.command('join', JoinHandler);
 bot.command('lock', LockHandler);
-bot.command('info', InfoHandler);
 
 bot.on('callback_query', async (ctx) => {
   // ctx.telegram.deleteMessage(ctx.update.callback_query.message.chat.id, ctx.update.callback_query.message.message_id);

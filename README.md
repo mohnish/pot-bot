@@ -10,7 +10,6 @@
 - [x] /completed Fetch all completed pots
 - [x] /join Join an active unlocked pot
 - [x] /new Start a new pot
-- [x] /info Query an active pot
 - [x] /lock Lock a pot you created, preventing others from joining
 - [x] /end End a pot you created
 
